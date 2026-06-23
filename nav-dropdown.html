@@ -41,12 +41,24 @@
     padding:7px; min-width:152px; border-radius:15px; overflow:hidden;
     backdrop-filter: blur(0.5px) url(#jglass) saturate(1.1) brightness(1.02);
     -webkit-backdrop-filter: blur(0.5px) saturate(1.1);
-    background: rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.5);
+    background: rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.55);
+    /* one continuous glass-slab rim: bright top inset, present on all four sides + soft outer lift */
     box-shadow:
-      inset 0 1.5px 1px rgba(255,255,255,0.85),
-      inset 0 0 0 1px rgba(255,255,255,0.2),
-      0 16px 38px rgba(0,0,0,0.28), 0 2px 6px rgba(0,0,0,0.12); }
-  .menu[hidden]{ display:none; }
+      inset 0 1px 0.5px rgba(255,255,255,0.95),
+      inset 0 -1px 0.5px rgba(255,255,255,0.40),
+      inset 1px 0 0.5px rgba(255,255,255,0.32),
+      inset -1px 0 0.5px rgba(255,255,255,0.32),
+      inset 0 0 7px rgba(255,255,255,0.16),
+      0 1px 1px rgba(0,0,0,0.10),
+      0 3px 8px rgba(0,0,0,0.18),
+      0 20px 44px -10px rgba(0,0,0,0.34);
+    /* smooth (丝滑) open/close: scale + fade, eased; visibility keeps it out of tab order when closed */
+    transform-origin: top left;
+    opacity:0; transform:translateY(-6px) scale(0.96); visibility:hidden;
+    transition: opacity .2s ease, transform .26s cubic-bezier(.2,.9,.25,1), visibility 0s linear .26s; }
+  .menu.open{ opacity:1; transform:none; visibility:visible;
+    transition: opacity .2s ease, transform .26s cubic-bezier(.2,.9,.25,1); }
   /* gray scrim for text legibility over busy backdrops */
   .menu::before{ content:""; position:absolute; inset:0; pointer-events:none; border-radius:inherit; z-index:0;
     background:linear-gradient(100deg, rgba(20,24,28,0.2) 0%, rgba(20,24,28,0.07) 60%, rgba(20,24,28,0) 92%); }
@@ -84,7 +96,7 @@
         @diyan
         <svg class="chev" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 4.5 6 7.5 9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
-      <ul class="menu" id="site-menu" hidden>
+      <ul class="menu" id="site-menu">
         <li><a href="#writing">Writing</a></li>
         <li><a href="#log">Build log</a></li>
         <li><a href="#now">Now</a></li>
@@ -103,7 +115,7 @@
     function setOpen(v, { focus, returnFocus } = {}) {
       open = v;
       trigger.setAttribute('aria-expanded', String(v));
-      menu.hidden = !v;
+      menu.classList.toggle('open', v);
       if (v) {
         if (focus === 'first') items[0].focus();
         else if (focus === 'last') items[items.length - 1].focus();
