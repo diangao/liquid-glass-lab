@@ -1,0 +1,99 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"/>
+<title>Liquid Glass — three material studies</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  :root{ --font:"SF Pro Display","Inter",-apple-system,system-ui,sans-serif; }
+  html,body{margin:0;height:100%}
+  body{ min-height:100vh; background:url("https://res.cloudinary.com/pplx/image/upload/pplx-web/Computer/images/step-bg-02.webp") center/cover fixed no-repeat;
+    font-family:var(--font); -webkit-font-smoothing:antialiased; color:#fff; padding:54px 40px 70px; }
+  .head{ max-width:980px; margin:0 auto 44px; text-shadow:0 1px 6px rgba(0,0,0,.4); }
+  .head h1{ font-family:"Plus Jakarta Sans",var(--font); font-weight:800; font-size:30px; letter-spacing:-0.02em; margin:0 0 6px; }
+  .head p{ font-size:14px; opacity:.85; margin:0; max-width:560px; line-height:1.5; }
+  .row{ display:flex; gap:46px; justify-content:center; flex-wrap:wrap; max-width:1080px; margin:0 auto; }
+  .study{ width:230px; }
+  .label{ margin-bottom:14px; text-shadow:0 1px 5px rgba(0,0,0,.45); }
+  .label .name{ font-family:"Plus Jakarta Sans",var(--font); font-weight:700; font-size:17px; letter-spacing:-0.01em; }
+  .label .desc{ font-size:12.5px; opacity:.82; line-height:1.45; margin-top:3px; }
+  /* shared dropdown panel */
+  .menu{ list-style:none; margin:0; padding:5px; min-width:210px; border-radius:16px; position:relative; overflow:hidden;
+    border:1px solid rgba(255,255,255,0.6); box-shadow:inset 0 1.5px 1px rgba(255,255,255,0.95), inset 0 -2px 1.5px rgba(255,255,255,0.62),
+    inset 2px 0 1.5px rgba(255,255,255,0.52), inset -2px 0 1.5px rgba(255,255,255,0.52),
+    0 14px 34px -12px rgba(0,0,0,0.24); }
+  .menu a{ display:block; padding:11px 22px; margin:4px 0; border-radius:11px; text-decoration:none; white-space:nowrap; color:#fff;
+    font-size:14px; font-weight:500; letter-spacing:-0.004em; text-shadow:0 1px 3px rgba(0,0,0,.5); }
+  .menu li:first-child a{margin-top:0} .menu li:last-child a{margin-bottom:0}
+  .menu a.hi{ background:rgba(255,255,255,0.26); box-shadow:inset 0 0 0 1px rgba(255,255,255,0.18); }
+  /* Soft Frost */
+  .frost{ backdrop-filter: blur(0.5px) url(#frost) saturate(1.1) brightness(1.02); background:rgba(255,255,255,0.07); }
+  .frost::before{ content:""; position:absolute; inset:0; pointer-events:none; border-radius:inherit;
+    background:linear-gradient(100deg, rgba(20,24,28,0.2) 0%, rgba(20,24,28,0.07) 60%, rgba(20,24,28,0) 92%); }
+  .frost li{ position:relative; z-index:1 }
+  /* Edge Lens */
+  .edge{ backdrop-filter: url(#edge) brightness(1.0) saturate(1.03); background:rgba(255,255,255,0.02); }
+  /* Thick Crystal */
+  .thick{ backdrop-filter: url(#thick) brightness(1.01) saturate(1.05); background:rgba(255,255,255,0.015); }
+  .thick li{ position:relative; z-index:2 }
+  .thick::after{ content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none; z-index:1; mix-blend-mode:screen;
+    background:
+      linear-gradient(to bottom, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.03) 6%, transparent 14%),
+      radial-gradient(20% 16% at 4% 4%, rgba(255,255,255,0.26), transparent 74%),
+      radial-gradient(20% 16% at 96% 4%, rgba(255,255,255,0.22), transparent 74%),
+      radial-gradient(18% 15% at 4% 96%, rgba(255,255,255,0.14), transparent 74%),
+      radial-gradient(18% 15% at 96% 96%, rgba(255,255,255,0.14), transparent 74%); }
+</style></head>
+<body>
+  <svg aria-hidden="true" style="position:absolute;width:0;height:0">
+    <filter id="frost" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.019 0.020" numOctaves="1" seed="4" result="n"/>
+      <feGaussianBlur in="n" stdDeviation="1.4" result="nb"/>
+      <feDisplacementMap in="SourceGraphic" in2="nb" scale="64" xChannelSelector="R" yChannelSelector="G" result="dR"/>
+      <feColorMatrix in="dR" type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="rC"/>
+      <feDisplacementMap in="SourceGraphic" in2="nb" scale="54" xChannelSelector="R" yChannelSelector="G" result="dG"/>
+      <feColorMatrix in="dG" type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="gC"/>
+      <feDisplacementMap in="SourceGraphic" in2="nb" scale="46" xChannelSelector="R" yChannelSelector="G" result="dB"/>
+      <feColorMatrix in="dB" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="bC"/>
+      <feBlend in="rC" in2="gC" mode="screen" result="rg"/><feBlend in="rg" in2="bC" mode="screen"/>
+    </filter>
+    <filter id="edge" color-interpolation-filters="sRGB">
+      <feImage href="data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%20190%20200%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Cdefs%3E%0A%3ClinearGradient%20id%3D%22r%22%20x1%3D%22100%25%22%20y1%3D%220%25%22%20x2%3D%220%25%22%20y2%3D%220%25%22%3E%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%230000%22%2F%3E%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22red%22%2F%3E%3C%2FlinearGradient%3E%0A%3ClinearGradient%20id%3D%22b%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%220%25%22%20y2%3D%22100%25%22%3E%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%230000%22%2F%3E%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22blue%22%2F%3E%3C%2FlinearGradient%3E%0A%3C%2Fdefs%3E%0A%3Crect%20width%3D%22190%22%20height%3D%22200%22%20fill%3D%22black%22%2F%3E%0A%3Crect%20width%3D%22190%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23r%29%22%2F%3E%0A%3Crect%20width%3D%22190%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23b%29%22%20style%3D%22mix-blend-mode%3Adifference%22%2F%3E%0A%3Crect%20x%3D%2220%22%20y%3D%2220%22%20width%3D%22150%22%20height%3D%22160%22%20rx%3D%2210%22%20fill%3D%22hsl%280%200%25%2050%25%20%2F%201%29%22%20style%3D%22filter%3Ablur%285px%29%22%2F%3E%0A%3C%2Fsvg%3E" x="0" y="0" width="100%" height="100%" result="m"/>
+      <feDisplacementMap in="SourceGraphic" in2="m" xChannelSelector="R" yChannelSelector="B" scale="90" result="dR"/>
+  <feColorMatrix in="dR" type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="rC"/>
+  <feDisplacementMap in="SourceGraphic" in2="m" xChannelSelector="R" yChannelSelector="B" scale="86" result="dG"/>
+  <feColorMatrix in="dG" type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="gC"/>
+  <feDisplacementMap in="SourceGraphic" in2="m" xChannelSelector="R" yChannelSelector="B" scale="82" result="dB"/>
+  <feColorMatrix in="dB" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="bC"/>
+  <feBlend in="rC" in2="gC" mode="screen" result="rg"/><feBlend in="rg" in2="bC" mode="screen"/>
+    </filter>
+    <filter id="thick" color-interpolation-filters="sRGB">
+      <feImage href="data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%20190%20200%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Cdefs%3E%0A%3ClinearGradient%20id%3D%22r%22%20x1%3D%22100%25%22%20y1%3D%220%25%22%20x2%3D%220%25%22%20y2%3D%220%25%22%3E%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%230000%22%2F%3E%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22red%22%2F%3E%3C%2FlinearGradient%3E%0A%3ClinearGradient%20id%3D%22b%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%220%25%22%20y2%3D%22100%25%22%3E%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%230000%22%2F%3E%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22blue%22%2F%3E%3C%2FlinearGradient%3E%0A%3C%2Fdefs%3E%0A%3Crect%20width%3D%22190%22%20height%3D%22200%22%20fill%3D%22black%22%2F%3E%0A%3Crect%20width%3D%22190%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23r%29%22%2F%3E%0A%3Crect%20width%3D%22190%22%20height%3D%22200%22%20rx%3D%2216%22%20fill%3D%22url%28%23b%29%22%20style%3D%22mix-blend-mode%3Adifference%22%2F%3E%0A%3Crect%20x%3D%2224%22%20y%3D%2224%22%20width%3D%22142%22%20height%3D%22152%22%20rx%3D%2222%22%20fill%3D%22hsl%280%200%25%2050%25%20%2F%201%29%22%20style%3D%22filter%3Ablur%285px%29%22%2F%3E%0A%3C%2Fsvg%3E" x="0" y="0" width="100%" height="100%" result="m"/>
+      <feDisplacementMap in="SourceGraphic" in2="m" xChannelSelector="R" yChannelSelector="B" scale="48" result="dR"/>
+  <feColorMatrix in="dR" type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="rC"/>
+  <feDisplacementMap in="SourceGraphic" in2="m" xChannelSelector="R" yChannelSelector="B" scale="45" result="dG"/>
+  <feColorMatrix in="dG" type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="gC"/>
+  <feDisplacementMap in="SourceGraphic" in2="m" xChannelSelector="R" yChannelSelector="B" scale="43" result="dB"/>
+  <feColorMatrix in="dB" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="bC"/>
+  <feBlend in="rC" in2="gC" mode="screen" result="rg"/><feBlend in="rg" in2="bC" mode="screen"/>
+    </filter>
+  </svg>
+
+  <div class="head">
+    <h1>Liquid Glass — three material studies</h1>
+    <p>One refraction engine, three material moves. Same backdrop, same menu — only the glass changes.</p>
+  </div>
+  <div class="row">
+    <div class="study">
+      <div class="label"><div class="name">Soft Frost</div><div class="desc">full-surface frost — soft, atmospheric, system-light</div></div>
+      <ul class="menu frost"><li><a>Writing</a></li><li><a class="hi">Build log</a></li><li><a>Now</a></li><li><a>Contact</a></li></ul>
+    </div>
+    <div class="study">
+      <div class="label"><div class="name">Edge Lens</div><div class="desc">clear center, refraction only at the rim — a true lens</div></div>
+      <ul class="menu edge"><li><a>Writing</a></li><li><a class="hi">Build log</a></li><li><a>Now</a></li><li><a>Contact</a></li></ul>
+    </div>
+    <div class="study">
+      <div class="label"><div class="name">Thick Crystal</div><div class="desc">thick glass with corner gloss + caustic — solid, jewel-like</div></div>
+      <ul class="menu thick"><li><a>Writing</a></li><li><a class="hi">Build log</a></li><li><a>Now</a></li><li><a>Contact</a></li></ul>
+    </div>
+  </div>
+</body></html>
