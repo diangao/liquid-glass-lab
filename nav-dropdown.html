@@ -38,7 +38,7 @@
   .menu-wrap{ position:relative; }
   /* glass dropdown panel */
   .menu{ position:absolute; top:calc(100% + 8px); left:0; margin:0; list-style:none;
-    padding:5px; min-width:182px; border-radius:16px; overflow:hidden;
+    padding:5px; min-width:210px; border-radius:16px; overflow:hidden;
     backdrop-filter: blur(0.5px) url(#jglass) saturate(1.1) brightness(1.02);
     -webkit-backdrop-filter: blur(0.5px) saturate(1.1);
     background: rgba(255,255,255,0.07);
@@ -62,7 +62,7 @@
     background:linear-gradient(100deg, rgba(20,24,28,0.2) 0%, rgba(20,24,28,0.07) 60%, rgba(20,24,28,0) 92%); }
   .menu li{ position:relative; z-index:1; }
   /* each item-row: hit-area padding + sibling gap + rounded + full-row hover/focus fill */
-  .menu a{ display:block; padding:12px 22px; margin:4px 0; border-radius:11px; text-decoration:none; white-space:nowrap;
+  .menu a{ display:block; padding:11px 26px; margin:4px 0; border-radius:11px; text-decoration:none; white-space:nowrap;
     color:var(--on-photo); cursor:pointer; transition:background .12s ease;
     font-size:var(--menu-fz); font-weight:var(--menu-fw); line-height:var(--menu-lh); letter-spacing:var(--menu-ls);
     text-shadow:0 1px 3px rgba(0,0,0,.5); }
@@ -95,10 +95,10 @@
         <svg class="chev" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 4.5 6 7.5 9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
       <ul class="menu" id="site-menu">
-        <li><a href="#writing">Writing</a></li>
-        <li><a href="#log">Build log</a></li>
-        <li><a href="#now">Now</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="#writing">writing</a></li>
+        <li><a href="#log">build log</a></li>
+        <li><a href="#now">now</a></li>
+        <li><a href="#contact">contact</a></li>
       </ul>
     </div>
   </nav>
