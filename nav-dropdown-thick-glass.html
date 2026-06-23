@@ -60,11 +60,11 @@
   /* gloss: white highlight only at the 4 corners + a thin top sweep (thick-glass sheen, center stays clear) */
   .menu::after{ content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none; z-index:1;
     background:
-      linear-gradient(to bottom, rgba(255,255,255,0.42) 0%, rgba(255,255,255,0.05) 7%, transparent 16%),
-      radial-gradient(26% 22% at 4% 4%, rgba(255,255,255,0.5), transparent 70%),
-      radial-gradient(26% 22% at 96% 4%, rgba(255,255,255,0.42), transparent 70%),
-      radial-gradient(24% 20% at 4% 96%, rgba(255,255,255,0.3), transparent 70%),
-      radial-gradient(24% 20% at 96% 96%, rgba(255,255,255,0.3), transparent 70%);
+      linear-gradient(to bottom, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.03) 6%, transparent 14%),
+      radial-gradient(20% 16% at 4% 4%, rgba(255,255,255,0.26), transparent 74%),
+      radial-gradient(20% 16% at 96% 4%, rgba(255,255,255,0.22), transparent 74%),
+      radial-gradient(18% 15% at 4% 96%, rgba(255,255,255,0.14), transparent 74%),
+      radial-gradient(18% 15% at 96% 96%, rgba(255,255,255,0.14), transparent 74%);
     mix-blend-mode: screen; }
   .menu li{ position:relative; z-index:2; }
   /* each item-row: hit-area padding + sibling gap + rounded + full-row hover/focus fill */
