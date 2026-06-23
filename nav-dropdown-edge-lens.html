@@ -51,7 +51,7 @@
       inset -2px 0 1.5px rgba(255,255,255,0.52),
       inset 0 0 8px rgba(255,255,255,0.14),
       0 14px 34px -12px rgba(0,0,0,0.24);
-    /* smooth (丝滑) open/close: scale + fade, eased; visibility keeps it out of tab order when closed */
+    /* smooth open/close: clip-path reveal + opacity, eased; visibility keeps it out of tab order when closed */
     transform-origin: top left;
     opacity:0; visibility:hidden; clip-path: inset(0 34% 84% 34% round 16px);
     transition: opacity .11s cubic-bezier(.4,0,1,1), clip-path .11s cubic-bezier(.4,0,1,1), visibility 0s linear .11s; }
