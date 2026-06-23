@@ -1,56 +1,65 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Liquid glass — nav dropdown</title>
+<title>Liquid glass — interactive nav dropdown</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  /* ---- type tokens ---- */
+  /* ---- design tokens (validated visual layer) ---- */
   :root{
     --font:"SF Pro Display","SF Pro Text","Inter",-apple-system,system-ui,sans-serif;
     --nav-fz:15px;    --nav-fw:500;   --nav-ls:-0.004em;
     --menu-fz:18px;   --menu-fw:500;  --menu-lh:1.2;      --menu-ls:-0.004em;
     --on-photo:#fff;  --on-photo-dim:rgba(255,255,255,.78);
-    /* swap this to try the glass over any backdrop */
+    /* swap to try the glass over any backdrop */
     --bg:url("https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1800&q=90");
   }
   html,body{margin:0;height:100%}
   body{ background:var(--bg) center/cover no-repeat; font-family:var(--font); -webkit-font-smoothing:antialiased; }
-  nav{ position:fixed; top:28px; left:54px; right:54px; display:flex; align-items:center; gap:30px;
-    color:var(--on-photo); font-size:var(--nav-fz); font-weight:var(--nav-fw); letter-spacing:var(--nav-ls);
+
+  .nav{ position:fixed; top:26px; left:46px; display:flex; align-items:center; gap:6px;
     text-shadow:0 1px 5px rgba(0,0,0,.42); }
-  nav .mark{ width:9px; height:9px; border-radius:50%; background:rgba(255,255,255,.94);
-    box-shadow:0 0 0 3px rgba(255,255,255,.14), 0 1px 3px rgba(0,0,0,.25); margin-right:9px; }
-  nav .item{ color:var(--on-photo-dim); }
-  nav .item.active{ color:var(--on-photo); }
-  .menu{
-    position:fixed; top:74px; left:54px;
-    border-radius:15px; overflow:hidden; padding:7px;
+  .nav .mark{ width:9px; height:9px; border-radius:50%; background:rgba(255,255,255,.94);
+    box-shadow:0 0 0 3px rgba(255,255,255,.14), 0 1px 3px rgba(0,0,0,.25); margin:0 12px 0 4px; }
+
+  /* trigger button + nav links share one nav-item token */
+  .nav-item{ appearance:none; background:none; border:0; cursor:pointer; margin:0;
+    padding:6px 10px; border-radius:8px; text-decoration:none;
+    display:inline-flex; align-items:center; gap:5px;
+    color:var(--on-photo-dim); font-family:inherit;
+    font-size:var(--nav-fz); font-weight:var(--nav-fw); letter-spacing:var(--nav-ls); }
+  .nav-item:hover{ color:var(--on-photo); }
+  .nav-item:focus-visible{ color:var(--on-photo); outline:2px solid rgba(255,255,255,.75); outline-offset:2px; }
+  .nav-item[aria-expanded="true"]{ color:var(--on-photo); }
+  .chev{ width:9px; height:9px; opacity:.8; transition:transform .16s ease; }
+  .nav-item[aria-expanded="true"] .chev{ transform:rotate(180deg); }
+
+  .menu-wrap{ position:relative; }
+  /* glass dropdown panel */
+  .menu{ position:absolute; top:calc(100% + 8px); left:0; margin:0; list-style:none;
+    padding:7px; min-width:152px; border-radius:15px; overflow:hidden;
     backdrop-filter: blur(0.5px) url(#jglass) saturate(1.1) brightness(1.02);
     -webkit-backdrop-filter: blur(0.5px) saturate(1.1);
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.5);
+    background: rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.5);
     box-shadow:
       inset 0 1.5px 1px rgba(255,255,255,0.85),
       inset 0 0 0 1px rgba(255,255,255,0.2),
-      0 16px 38px rgba(0,0,0,0.28),
-      0 2px 6px rgba(0,0,0,0.12);
-  }
-  /* small gray scrim — text legibility over busy backdrops */
-  .menu::before{
-    content:""; position:absolute; inset:0; pointer-events:none; border-radius:inherit; z-index:0;
-    background:linear-gradient(100deg, rgba(20,24,28,0.2) 0%, rgba(20,24,28,0.07) 60%, rgba(20,24,28,0) 92%);
-  }
-  .menu .items{ position:relative; z-index:1; display:flex; flex-direction:column; }
-  /* each item = a box: hit-area padding + sibling margin (gap) + rounded + full-row hover fill */
-  .menu .items > div{ padding:6px 12px; margin:3px 0; border-radius:8px; color:var(--on-photo); white-space:nowrap;
-    cursor:pointer; transition:background .12s ease;
+      0 16px 38px rgba(0,0,0,0.28), 0 2px 6px rgba(0,0,0,0.12); }
+  .menu[hidden]{ display:none; }
+  /* gray scrim for text legibility over busy backdrops */
+  .menu::before{ content:""; position:absolute; inset:0; pointer-events:none; border-radius:inherit; z-index:0;
+    background:linear-gradient(100deg, rgba(20,24,28,0.2) 0%, rgba(20,24,28,0.07) 60%, rgba(20,24,28,0) 92%); }
+  .menu li{ position:relative; z-index:1; }
+  /* each item-row: hit-area padding + sibling gap + rounded + full-row hover/focus fill */
+  .menu a{ display:block; padding:6px 12px; margin:3px 0; border-radius:8px; text-decoration:none; white-space:nowrap;
+    color:var(--on-photo); cursor:pointer; transition:background .12s ease;
     font-size:var(--menu-fz); font-weight:var(--menu-fw); line-height:var(--menu-lh); letter-spacing:var(--menu-ls);
     text-shadow:0 1px 3px rgba(0,0,0,.5); }
-  .menu .items > div:first-child{ margin-top:0; }
-  .menu .items > div:last-child{ margin-bottom:0; }
-  .menu .items > div:hover{ background:rgba(255,255,255,0.26); box-shadow:inset 0 0 0 1px rgba(255,255,255,0.18); }
+  .menu li:first-child a{ margin-top:0; }
+  .menu li:last-child a{ margin-bottom:0; }
+  .menu a:hover, .menu a:focus-visible{ background:rgba(255,255,255,0.26);
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,0.18); outline:none; }
 </style></head>
 <body>
   <svg aria-hidden="true" style="position:absolute;width:0;height:0">
@@ -67,11 +76,65 @@
       <feBlend in="rg" in2="bC" mode="screen"/>
     </filter>
   </svg>
-  <nav>
+
+  <nav class="nav" aria-label="Primary">
     <span class="mark" aria-hidden="true"></span>
-    <span class="item active">Company</span>
-    <span class="item">Product</span>
-    <span class="item">Resources</span>
+    <div class="menu-wrap">
+      <button class="nav-item" id="trigger" aria-haspopup="true" aria-expanded="false" aria-controls="company-menu">
+        Company
+        <svg class="chev" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 4.5 6 7.5 9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <ul class="menu" id="company-menu" hidden>
+        <li><a href="#about">About</a></li>
+        <li><a href="#careers">Careers</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <a class="nav-item" href="#product">Product</a>
+    <a class="nav-item" href="#resources">Resources</a>
   </nav>
-  <div class="menu"><div class="items"><div>About</div><div>Careers</div><div>Contact</div></div></div>
+
+  <script>
+    // Disclosure-style nav dropdown of LINKS (WAI-ARIA: button toggles, items are anchors).
+    const trigger = document.getElementById('trigger');
+    const menu = document.getElementById('company-menu');
+    const items = Array.from(menu.querySelectorAll('a'));
+    let open = false;
+
+    function setOpen(v, { focus, returnFocus } = {}) {
+      open = v;
+      trigger.setAttribute('aria-expanded', String(v));
+      menu.hidden = !v;
+      if (v) {
+        if (focus === 'first') items[0].focus();
+        else if (focus === 'last') items[items.length - 1].focus();
+      } else if (returnFocus) {
+        trigger.focus();
+      }
+    }
+
+    trigger.addEventListener('click', () => setOpen(!open));
+    trigger.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault(); setOpen(true, { focus: 'first' });
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault(); setOpen(true, { focus: 'last' });
+      } else if (e.key === 'Escape' && open) {
+        e.preventDefault(); setOpen(false, { returnFocus: true });
+      }
+    });
+    menu.addEventListener('keydown', (e) => {
+      const i = items.indexOf(document.activeElement);
+      if (e.key === 'ArrowDown') { e.preventDefault(); items[(i + 1) % items.length].focus(); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); items[(i - 1 + items.length) % items.length].focus(); }
+      else if (e.key === 'Home') { e.preventDefault(); items[0].focus(); }
+      else if (e.key === 'End') { e.preventDefault(); items[items.length - 1].focus(); }
+      else if (e.key === 'Escape') { e.preventDefault(); setOpen(false, { returnFocus: true }); }
+      else if (e.key === 'Tab') { setOpen(false); } // let Tab move focus out naturally
+    });
+    // outside click / focus loss closes (no focus return — user is moving away)
+    document.addEventListener('pointerdown', (e) => {
+      if (open && !e.target.closest('.menu-wrap')) setOpen(false);
+    });
+  </script>
 </body></html>
