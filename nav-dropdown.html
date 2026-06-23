@@ -41,18 +41,16 @@
     padding:7px; min-width:152px; border-radius:15px; overflow:hidden;
     backdrop-filter: blur(0.5px) url(#jglass) saturate(1.1) brightness(1.02);
     -webkit-backdrop-filter: blur(0.5px) saturate(1.1);
-    background: rgba(255,255,255,0.06);
-    border:1px solid rgba(255,255,255,0.55);
+    background: rgba(255,255,255,0.11);
+    border:1px solid rgba(255,255,255,0.6);
     /* one continuous glass-slab rim: bright top inset, present on all four sides + soft outer lift */
     box-shadow:
-      inset 0 1px 0.5px rgba(255,255,255,0.95),
-      inset 0 -1px 0.5px rgba(255,255,255,0.40),
-      inset 1px 0 0.5px rgba(255,255,255,0.32),
-      inset -1px 0 0.5px rgba(255,255,255,0.32),
-      inset 0 0 7px rgba(255,255,255,0.16),
-      0 1px 1px rgba(0,0,0,0.10),
-      0 3px 8px rgba(0,0,0,0.18),
-      0 20px 44px -10px rgba(0,0,0,0.34);
+      inset 0 1.5px 1px rgba(255,255,255,0.95),
+      inset 0 -2px 1.5px rgba(255,255,255,0.62),
+      inset 2px 0 1.5px rgba(255,255,255,0.52),
+      inset -2px 0 1.5px rgba(255,255,255,0.52),
+      inset 0 0 8px rgba(255,255,255,0.14),
+      0 14px 34px -12px rgba(0,0,0,0.24);
     /* smooth (丝滑) open/close: scale + fade, eased; visibility keeps it out of tab order when closed */
     transform-origin: top left;
     opacity:0; transform:translateY(-6px) scale(0.96); visibility:hidden;
@@ -78,11 +76,11 @@
     <filter id="jglass" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
       <feTurbulence type="fractalNoise" baseFrequency="0.019 0.020" numOctaves="1" seed="4" result="n"/>
       <feGaussianBlur in="n" stdDeviation="1.4" result="nb"/>
-      <feDisplacementMap in="SourceGraphic" in2="nb" scale="64" xChannelSelector="R" yChannelSelector="G" result="dR"/>
+      <feDisplacementMap in="SourceGraphic" in2="nb" scale="34" xChannelSelector="R" yChannelSelector="G" result="dR"/>
       <feColorMatrix in="dR" type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="rC"/>
-      <feDisplacementMap in="SourceGraphic" in2="nb" scale="54" xChannelSelector="R" yChannelSelector="G" result="dG"/>
+      <feDisplacementMap in="SourceGraphic" in2="nb" scale="28" xChannelSelector="R" yChannelSelector="G" result="dG"/>
       <feColorMatrix in="dG" type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="gC"/>
-      <feDisplacementMap in="SourceGraphic" in2="nb" scale="46" xChannelSelector="R" yChannelSelector="G" result="dB"/>
+      <feDisplacementMap in="SourceGraphic" in2="nb" scale="23" xChannelSelector="R" yChannelSelector="G" result="dB"/>
       <feColorMatrix in="dB" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="bC"/>
       <feBlend in="rC" in2="gC" mode="screen" result="rg"/>
       <feBlend in="rg" in2="bC" mode="screen"/>
