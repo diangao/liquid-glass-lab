@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Liquid glass — nav dropdown</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ---- type tokens ---- */
+  :root{
+    --font:"SF Pro Display","SF Pro Text","Inter",-apple-system,system-ui,sans-serif;
+    --nav-fz:15px;    --nav-fw:500;   --nav-ls:-0.004em;
+    --menu-fz:18px;   --menu-fw:500;  --menu-lh:1.2;      --menu-ls:-0.004em;
+    --on-photo:#fff;  --on-photo-dim:rgba(255,255,255,.78);
+    /* swap this to try the glass over any backdrop */
+    --bg:url("https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1800&q=90");
+  }
+  html,body{margin:0;height:100%}
+  body{ background:var(--bg) center/cover no-repeat; font-family:var(--font); -webkit-font-smoothing:antialiased; }
+  nav{ position:fixed; top:28px; left:54px; right:54px; display:flex; align-items:center; gap:30px;
+    color:var(--on-photo); font-size:var(--nav-fz); font-weight:var(--nav-fw); letter-spacing:var(--nav-ls);
+    text-shadow:0 1px 5px rgba(0,0,0,.42); }
+  nav .mark{ width:9px; height:9px; border-radius:50%; background:rgba(255,255,255,.94);
+    box-shadow:0 0 0 3px rgba(255,255,255,.14), 0 1px 3px rgba(0,0,0,.25); margin-right:9px; }
+  nav .item{ color:var(--on-photo-dim); }
+  nav .item.active{ color:var(--on-photo); }
+  .menu{
+    position:fixed; top:74px; left:54px;
+    border-radius:15px; overflow:hidden; padding:7px;
+    backdrop-filter: blur(0.5px) url(#jglass) saturate(1.1) brightness(1.02);
+    -webkit-backdrop-filter: blur(0.5px) saturate(1.1);
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.5);
+    box-shadow:
+      inset 0 1.5px 1px rgba(255,255,255,0.85),
+      inset 0 0 0 1px rgba(255,255,255,0.2),
+      0 16px 38px rgba(0,0,0,0.28),
+      0 2px 6px rgba(0,0,0,0.12);
+  }
+  /* small gray scrim — text legibility over busy backdrops */
+  .menu::before{
+    content:""; position:absolute; inset:0; pointer-events:none; border-radius:inherit; z-index:0;
+    background:linear-gradient(100deg, rgba(20,24,28,0.2) 0%, rgba(20,24,28,0.07) 60%, rgba(20,24,28,0) 92%);
+  }
+  .menu .items{ position:relative; z-index:1; display:flex; flex-direction:column; }
+  /* each item = a box: hit-area padding + sibling margin (gap) + rounded + full-row hover fill */
+  .menu .items > div{ padding:6px 12px; margin:3px 0; border-radius:8px; color:var(--on-photo); white-space:nowrap;
+    cursor:pointer; transition:background .12s ease;
+    font-size:var(--menu-fz); font-weight:var(--menu-fw); line-height:var(--menu-lh); letter-spacing:var(--menu-ls);
+    text-shadow:0 1px 3px rgba(0,0,0,.5); }
+  .menu .items > div:first-child{ margin-top:0; }
+  .menu .items > div:last-child{ margin-bottom:0; }
+  .menu .items > div:hover{ background:rgba(255,255,255,0.26); box-shadow:inset 0 0 0 1px rgba(255,255,255,0.18); }
+</style></head>
+<body>
+  <svg aria-hidden="true" style="position:absolute;width:0;height:0">
+    <filter id="jglass" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.019 0.020" numOctaves="1" seed="4" result="n"/>
+      <feGaussianBlur in="n" stdDeviation="1.4" result="nb"/>
+      <feDisplacementMap in="SourceGraphic" in2="nb" scale="64" xChannelSelector="R" yChannelSelector="G" result="dR"/>
+      <feColorMatrix in="dR" type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="rC"/>
+      <feDisplacementMap in="SourceGraphic" in2="nb" scale="54" xChannelSelector="R" yChannelSelector="G" result="dG"/>
+      <feColorMatrix in="dG" type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="gC"/>
+      <feDisplacementMap in="SourceGraphic" in2="nb" scale="46" xChannelSelector="R" yChannelSelector="G" result="dB"/>
+      <feColorMatrix in="dB" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="bC"/>
+      <feBlend in="rC" in2="gC" mode="screen" result="rg"/>
+      <feBlend in="rg" in2="bC" mode="screen"/>
+    </filter>
+  </svg>
+  <nav>
+    <span class="mark" aria-hidden="true"></span>
+    <span class="item active">Company</span>
+    <span class="item">Product</span>
+    <span class="item">Resources</span>
+  </nav>
+  <div class="menu"><div class="items"><div>About</div><div>Careers</div><div>Contact</div></div></div>
+</body></html>
