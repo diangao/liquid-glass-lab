@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Liquid glass — &lt;glass-nav&gt; web component</title>
+<style>
+  html,body{ margin:0; height:100%; }
+  body{ background:url("https://res.cloudinary.com/pplx/image/upload/pplx-web/Computer/images/step-bg-02.webp") center/cover fixed no-repeat;
+    font-family:"SF Pro Display","Inter",-apple-system,system-ui,sans-serif;
+    display:flex; gap:64px; align-items:flex-start; padding:64px 48px; }
+  .col{ display:flex; flex-direction:column; gap:14px; }
+  .col h2{ color:#fff; font-weight:600; font-size:14px; margin:0; letter-spacing:-0.01em;
+    text-shadow:0 1px 6px rgba(0,0,0,.45); }
+</style>
+<script src="glass-nav.js" defer></script>
+</head><body>
+  <div class="col">
+    <h2>Soft Frost</h2>
+    <glass-nav material="soft-frost" label="dian's corner">
+      <a href="#writing">Scribbles</a><a href="#log">Tinkering</a><a href="#now">Up to</a><a href="#contact">Knock knock</a>
+    </glass-nav>
+  </div>
+  <div class="col">
+    <h2>Edge Lens</h2>
+    <glass-nav material="edge-lens" label="dian's corner">
+      <a href="#writing">Scribbles</a><a href="#log">Tinkering</a><a href="#now">Up to</a><a href="#contact">Knock knock</a>
+    </glass-nav>
+  </div>
+  <div class="col">
+    <h2>Thick Crystal</h2>
+    <glass-nav material="thick-crystal" label="dian's corner">
+      <a href="#writing">Scribbles</a><a href="#log">Tinkering</a><a href="#now">Up to</a><a href="#contact">Knock knock</a>
+    </glass-nav>
+  </div>
+</body></html>
