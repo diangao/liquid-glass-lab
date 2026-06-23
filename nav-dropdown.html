@@ -10,7 +10,7 @@
   :root{
     --font:"SF Pro Display","SF Pro Text","Inter",-apple-system,system-ui,sans-serif;
     --nav-fz:15px;    --nav-fw:500;   --nav-ls:-0.004em;
-    --menu-fz:15px;   --menu-fw:500;  --menu-lh:1.25;     --menu-ls:-0.004em;
+    --menu-fz:14px;   --menu-fw:500;  --menu-lh:1.25;     --menu-ls:-0.004em;
     --on-photo:#fff;  --on-photo-dim:rgba(255,255,255,.78);
     /* swap to try the glass over any backdrop */
     --bg:url("https://res.cloudinary.com/pplx/image/upload/pplx-web/Computer/images/step-bg-02.webp");
@@ -38,7 +38,7 @@
   .menu-wrap{ position:relative; }
   /* glass dropdown panel */
   .menu{ position:absolute; top:calc(100% + 8px); left:0; margin:0; list-style:none;
-    padding:6px; min-width:140px; border-radius:14px; overflow:hidden;
+    padding:8px; min-width:156px; border-radius:15px; overflow:hidden;
     backdrop-filter: blur(0.5px) url(#jglass) saturate(1.1) brightness(1.02);
     -webkit-backdrop-filter: blur(0.5px) saturate(1.1);
     background: rgba(255,255,255,0.07);
@@ -62,7 +62,7 @@
     background:linear-gradient(100deg, rgba(20,24,28,0.2) 0%, rgba(20,24,28,0.07) 60%, rgba(20,24,28,0) 92%); }
   .menu li{ position:relative; z-index:1; }
   /* each item-row: hit-area padding + sibling gap + rounded + full-row hover/focus fill */
-  .menu a{ display:block; padding:5px 11px; margin:2px 0; border-radius:8px; text-decoration:none; white-space:nowrap;
+  .menu a{ display:block; padding:7px 15px; margin:2px 0; border-radius:9px; text-decoration:none; white-space:nowrap;
     color:var(--on-photo); cursor:pointer; transition:background .12s ease;
     font-size:var(--menu-fz); font-weight:var(--menu-fw); line-height:var(--menu-lh); letter-spacing:var(--menu-ls);
     text-shadow:0 1px 3px rgba(0,0,0,.5); }
