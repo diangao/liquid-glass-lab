@@ -8,6 +8,12 @@ This is a small, self-contained frontend style experiment for the glass
 material. Use it to tune the effect against a reference frame and an exact or
 near-exact background image.
 
+## Material demos
+
+| Soft Frost | Edge Lens | Thick Crystal |
+| --- | --- | --- |
+| ![Soft Frost dropdown interaction](media/soft-frost.gif) | ![Edge Lens dropdown interaction](media/edge-lens.gif) | ![Thick Crystal dropdown interaction](media/thick-crystal.gif) |
+
 ## Run
 
 Open `index.html` in Chrome, or serve it locally:
