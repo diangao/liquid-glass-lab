@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Liquid glass — &lt;glass-nav&gt; web component</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; min-height:100%; }
+  body{ min-height:100vh; background:repeating-linear-gradient(0deg,#3a5e9a 0 2px,transparent 2px 24px),repeating-linear-gradient(90deg,#3a5e9a 0 2px,transparent 2px 24px),#0c1426;
+    font-family:"Plus Jakarta Sans","SF Pro Display","Inter",-apple-system,system-ui,sans-serif; color:#fff;
+    -webkit-font-smoothing:antialiased; padding:60px 48px 120px; }
+  .head{ max-width:980px; margin:0 auto 60px; text-shadow:0 1px 8px rgba(0,0,0,.4); }
+  .head h1{ font-weight:800; font-size:30px; letter-spacing:-0.02em; margin:0 0 8px; }
+  .head p{ font-size:14px; opacity:.85; margin:0; max-width:600px; line-height:1.55;
+    font-family:"SF Pro Display","Inter",system-ui,sans-serif; }
+  .head .note{ font-size:12.5px; opacity:.72; margin:10px 0 0;
+    font-family:"SF Pro Display","Inter",system-ui,sans-serif; }
+  .head code{ font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:13px;
+    background:rgba(255,255,255,0.16); padding:1px 6px; border-radius:5px; }
+  .row{ display:flex; gap:108px; justify-content:center; flex-wrap:wrap; max-width:1340px; margin:0 auto; }
+  /* each material name is its own dropdown trigger */
+  glass-nav{ --glass-nav-trigger-size:16px; --glass-nav-trigger-weight:700; width:212px; }
+  .foot{ position:fixed; left:0; right:0; bottom:26px; text-align:center; z-index:5; }
+  /* frosted-glass GitHub badge */
+  .gh{ display:inline-flex; align-items:center; gap:8px;
+    color:#fff; font-size:13px; font-weight:600; text-decoration:none; letter-spacing:-0.01em;
+    background:rgba(255,255,255,0.12); padding:9px 15px; border-radius:11px;
+    border:1px solid rgba(255,255,255,0.35);
+    backdrop-filter:blur(14px) saturate(1.4); -webkit-backdrop-filter:blur(14px) saturate(1.4);
+    box-shadow: inset 0 1px 1px rgba(255,255,255,0.5), inset 0 -1px 1px rgba(255,255,255,0.2),
+      0 6px 18px -6px rgba(0,0,0,0.3);
+    text-shadow:0 1px 4px rgba(0,0,0,.35); transition:background .15s ease; }
+  .gh:hover{ background:rgba(255,255,255,0.2); }
+  .gh svg{ width:16px; height:16px; display:block; }
+  /* handwritten "drag me around!" annotation — a page-level sibling, not inside the glass */
+  .hint{ position:absolute; left:96px; top:300px; z-index:3; pointer-events:none;
+    font-family:"Caveat",cursive; font-weight:700; font-size:34px; color:rgba(255,255,255,0.96);
+    transform:rotate(-7deg); text-shadow:0 2px 8px rgba(0,0,0,0.45); line-height:1; }
+  .hint .arrow{ position:absolute; left:108px; top:34px; transform:rotate(6deg); }
+  .hint .arrow path{ stroke:rgba(255,255,255,0.92); stroke-width:2.4; fill:none; stroke-linecap:round; stroke-linejoin:round;
+    filter:drop-shadow(0 1px 3px rgba(0,0,0,0.4)); }
+</style>
+<script src="glass-nav.js" defer></script>
+</head><body>
+  <div class="hint">drag me around!
+    <svg class="arrow" width="120" height="80" viewBox="0 0 120 80" aria-hidden="true">
+      <path d="M6 8 C 46 6 84 22 100 56"/>
+      <path d="M86 50 L101 58 L92 40"/>
+    </svg>
+  </div>
+  <div class="head">
+    <h1>edge test — drag panels, all 4 edges should curve inward</h1>
+    <p>One web component, three glass materials. Set <code>material</code>, give it a <code>label</code>,
+       drop in <code>&lt;a&gt;</code> items — the refraction, animation, and keyboard handling come built in.</p>
+    <p class="note">Best viewed in Chrome — the refraction uses a Chromium-only filter.</p>
+  </div>
+  <div class="row">
+    <glass-nav open material="soft-ripple" label="Soft Ripple">
+      <a href="#writing">Scribbles</a><a href="#log">Tinkering</a><a href="#now">Up to</a><a href="#contact">Knock knock</a>
+    </glass-nav>
+    <glass-nav open material="edge-lens" label="Edge Lens">
+      <a href="#writing">Scribbles</a><a href="#log">Tinkering</a><a href="#now">Up to</a><a href="#contact">Knock knock</a>
+    </glass-nav>
+    <glass-nav open material="thick-crystal" label="Thick Crystal">
+      <a href="#writing">Scribbles</a><a href="#log">Tinkering</a><a href="#now">Up to</a><a href="#contact">Knock knock</a>
+    </glass-nav>
+  </div>
+  <script>
+    // Make the three glass panels draggable around the background; positions persist in localStorage.
+    window.addEventListener('load', () => {
+      const navs = [...document.querySelectorAll('glass-nav')];
+      const KEY = 'glass-nav-pos';
+      let saved = {};
+      try { saved = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (_) {}
+      const rects = navs.map(n => n.getBoundingClientRect());
+      navs.forEach((n, i) => {
+        const id = n.getAttribute('material');
+        const p = saved[id];
+        n.style.position = 'absolute';
+        n.style.margin = '0';
+        n.style.left = ((p && p.left != null) ? p.left : Math.round(rects[i].left + window.scrollX)) + 'px';
+        n.style.top  = ((p && p.top  != null) ? p.top  : Math.round(rects[i].top))  + 'px';
+        n.style.cursor = 'grab';
+        n.style.touchAction = 'none';
+        n.style.userSelect = 'none';
+        n.style.webkitUserSelect = 'none';
+        n.style.zIndex = '1';
+      });
+      let z = 2;
+      const save = () => {
+        const out = {};
+        navs.forEach(n => { out[n.getAttribute('material')] = { left: parseFloat(n.style.left), top: parseFloat(n.style.top) }; });
+        try { localStorage.setItem(KEY, JSON.stringify(out)); } catch (_) {}
+      };
+      navs.forEach(n => {
+        let moved = false;
+        // stop the browser's native text/link drag from hijacking the pointer —
+        // do it on dragstart (NOT pointerdown, which would suppress the click that toggles the menu).
+        n.addEventListener('dragstart', e => e.preventDefault());
+        // pointerdown anywhere on the panel (trigger OR card body) starts a drag;
+        // document-level move/up listeners track it reliably even as the element moves.
+        n.addEventListener('pointerdown', e => {
+          if (e.button) return;
+          moved = false;
+          const sx = e.clientX, sy = e.clientY;
+          const ox = parseFloat(n.style.left), oy = parseFloat(n.style.top);
+          n.style.cursor = 'grabbing'; n.style.zIndex = String(++z);
+          const move = ev => {
+            const dx = ev.clientX - sx, dy = ev.clientY - sy;
+            if (Math.abs(dx) > 3 || Math.abs(dy) > 3) moved = true;
+            n.style.left = (ox + dx) + 'px';
+            n.style.top  = (oy + dy) + 'px';
+          };
+          const up = () => {
+            document.removeEventListener('pointermove', move);
+            document.removeEventListener('pointerup', up);
+            n.style.cursor = 'grab';
+            if (moved) save();
+          };
+          document.addEventListener('pointermove', move);
+          document.addEventListener('pointerup', up);
+        });
+        // if we actually dragged, swallow the click so the menu / links don't fire
+        n.addEventListener('click', e => { if (moved) { e.stopPropagation(); e.preventDefault(); moved = false; } }, true);
+      });
+    });
+  </script>
+</body></html>
