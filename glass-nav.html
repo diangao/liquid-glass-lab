@@ -76,6 +76,8 @@
         n.style.top  = ((p && p.top  != null) ? p.top  : Math.round(rects[i].top))  + 'px';
         n.style.cursor = 'grab';
         n.style.touchAction = 'none';
+        n.style.userSelect = 'none';
+        n.style.webkitUserSelect = 'none';
         n.style.zIndex = '1';
       });
       let z = 2;
@@ -85,30 +87,32 @@
         try { localStorage.setItem(KEY, JSON.stringify(out)); } catch (_) {}
       };
       navs.forEach(n => {
-        let dragging = false, moved = false, sx, sy, ox, oy;
+        let moved = false;
+        // pointerdown anywhere on the panel (trigger OR card body) starts a drag;
+        // document-level move/up listeners track it reliably even as the element moves.
         n.addEventListener('pointerdown', e => {
-          dragging = true; moved = false;
-          sx = e.clientX; sy = e.clientY;
-          ox = parseFloat(n.style.left); oy = parseFloat(n.style.top);
+          if (e.button) return;
+          e.preventDefault();  // stop native text/link drag from hijacking the pointer
+          moved = false;
+          const sx = e.clientX, sy = e.clientY;
+          const ox = parseFloat(n.style.left), oy = parseFloat(n.style.top);
           n.style.cursor = 'grabbing'; n.style.zIndex = String(++z);
-          n.setPointerCapture(e.pointerId);
+          const move = ev => {
+            const dx = ev.clientX - sx, dy = ev.clientY - sy;
+            if (Math.abs(dx) > 3 || Math.abs(dy) > 3) moved = true;
+            n.style.left = (ox + dx) + 'px';
+            n.style.top  = (oy + dy) + 'px';
+          };
+          const up = () => {
+            document.removeEventListener('pointermove', move);
+            document.removeEventListener('pointerup', up);
+            n.style.cursor = 'grab';
+            if (moved) save();
+          };
+          document.addEventListener('pointermove', move);
+          document.addEventListener('pointerup', up);
         });
-        n.addEventListener('pointermove', e => {
-          if (!dragging) return;
-          const dx = e.clientX - sx, dy = e.clientY - sy;
-          if (Math.abs(dx) > 3 || Math.abs(dy) > 3) moved = true;
-          n.style.left = (ox + dx) + 'px';
-          n.style.top  = (oy + dy) + 'px';
-        });
-        const end = e => {
-          if (!dragging) return;
-          dragging = false; n.style.cursor = 'grab';
-          try { n.releasePointerCapture(e.pointerId); } catch (_) {}
-          if (moved) save();
-        };
-        n.addEventListener('pointerup', end);
-        n.addEventListener('pointercancel', end);
-        // if we actually dragged, swallow the click so the menu doesn't toggle
+        // if we actually dragged, swallow the click so the menu / links don't fire
         n.addEventListener('click', e => { if (moved) { e.stopPropagation(); e.preventDefault(); moved = false; } }, true);
       });
     });
