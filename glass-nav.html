@@ -21,7 +21,7 @@
   .row{ display:flex; gap:108px; justify-content:center; flex-wrap:wrap; max-width:1340px; margin:0 auto; }
   /* each material name is its own dropdown trigger */
   glass-nav{ --glass-nav-trigger-size:16px; --glass-nav-trigger-weight:700; width:212px; }
-  .foot{ text-align:center; margin-top:272px; }
+  .foot{ position:fixed; left:0; right:0; bottom:28px; text-align:center; z-index:5; }
   /* frosted-glass GitHub badge */
   .gh{ display:inline-flex; align-items:center; gap:8px;
     color:#fff; font-size:13px; font-weight:600; text-decoration:none; letter-spacing:-0.01em;
@@ -59,4 +59,58 @@
       View on GitHub
     </a>
   </div>
+  <script>
+    // Make the three glass panels draggable around the background; positions persist in localStorage.
+    window.addEventListener('load', () => {
+      const navs = [...document.querySelectorAll('glass-nav')];
+      const KEY = 'glass-nav-pos';
+      let saved = {};
+      try { saved = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (_) {}
+      const rects = navs.map(n => n.getBoundingClientRect());
+      navs.forEach((n, i) => {
+        const id = n.getAttribute('material');
+        const p = saved[id];
+        n.style.position = 'fixed';
+        n.style.margin = '0';
+        n.style.left = ((p && p.left != null) ? p.left : Math.round(rects[i].left)) + 'px';
+        n.style.top  = ((p && p.top  != null) ? p.top  : Math.round(rects[i].top))  + 'px';
+        n.style.cursor = 'grab';
+        n.style.touchAction = 'none';
+        n.style.zIndex = '1';
+      });
+      let z = 2;
+      const save = () => {
+        const out = {};
+        navs.forEach(n => { out[n.getAttribute('material')] = { left: parseFloat(n.style.left), top: parseFloat(n.style.top) }; });
+        try { localStorage.setItem(KEY, JSON.stringify(out)); } catch (_) {}
+      };
+      navs.forEach(n => {
+        let dragging = false, moved = false, sx, sy, ox, oy;
+        n.addEventListener('pointerdown', e => {
+          dragging = true; moved = false;
+          sx = e.clientX; sy = e.clientY;
+          ox = parseFloat(n.style.left); oy = parseFloat(n.style.top);
+          n.style.cursor = 'grabbing'; n.style.zIndex = String(++z);
+          n.setPointerCapture(e.pointerId);
+        });
+        n.addEventListener('pointermove', e => {
+          if (!dragging) return;
+          const dx = e.clientX - sx, dy = e.clientY - sy;
+          if (Math.abs(dx) > 3 || Math.abs(dy) > 3) moved = true;
+          n.style.left = (ox + dx) + 'px';
+          n.style.top  = (oy + dy) + 'px';
+        });
+        const end = e => {
+          if (!dragging) return;
+          dragging = false; n.style.cursor = 'grab';
+          try { n.releasePointerCapture(e.pointerId); } catch (_) {}
+          if (moved) save();
+        };
+        n.addEventListener('pointerup', end);
+        n.addEventListener('pointercancel', end);
+        // if we actually dragged, swallow the click so the menu doesn't toggle
+        n.addEventListener('click', e => { if (moved) { e.stopPropagation(); e.preventDefault(); moved = false; } }, true);
+      });
+    });
+  </script>
 </body></html>
