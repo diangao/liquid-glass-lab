@@ -3,7 +3,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Liquid glass — &lt;glass-nav&gt; web component</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   *{ box-sizing:border-box; }
   html,body{ margin:0; min-height:100%; }
@@ -35,10 +35,10 @@
   .gh svg{ width:16px; height:16px; display:block; }
   /* handwritten "drag me around!" annotation — a page-level sibling, not inside the glass */
   .hint{ position:absolute; left:96px; top:300px; z-index:3; pointer-events:none;
-    font-family:"Caveat",cursive; font-weight:700; font-size:34px; color:rgba(255,255,255,0.96);
-    transform:rotate(-7deg); text-shadow:0 2px 8px rgba(0,0,0,0.45); line-height:1; }
+    font-family:"Caveat",cursive; font-weight:400; font-size:33px; color:rgba(255,255,255,0.92);
+    transform:rotate(-7deg); text-shadow:0 1px 6px rgba(0,0,0,0.4); line-height:1; transition:opacity .45s ease; }
   .hint .arrow{ position:absolute; left:108px; top:34px; transform:rotate(6deg); }
-  .hint .arrow path{ stroke:rgba(255,255,255,0.92); stroke-width:2.4; fill:none; stroke-linecap:round; stroke-linejoin:round;
+  .hint .arrow path{ stroke:rgba(255,255,255,0.92); stroke-width:1.5; fill:none; stroke-linecap:round; stroke-linejoin:round;
     filter:drop-shadow(0 1px 3px rgba(0,0,0,0.4)); }
 </style>
 <script src="glass-nav.js" defer></script>
@@ -94,6 +94,7 @@
         n.style.zIndex = '1';
       });
       let z = 2;
+      const hint = document.querySelector('.hint');
       const save = () => {
         const out = {};
         navs.forEach(n => { out[n.getAttribute('material')] = { left: parseFloat(n.style.left), top: parseFloat(n.style.top) }; });
@@ -114,7 +115,7 @@
           n.style.cursor = 'grabbing'; n.style.zIndex = String(++z);
           const move = ev => {
             const dx = ev.clientX - sx, dy = ev.clientY - sy;
-            if (Math.abs(dx) > 3 || Math.abs(dy) > 3) moved = true;
+            if (Math.abs(dx) > 3 || Math.abs(dy) > 3) { moved = true; if (hint) hint.style.opacity = '0'; }
             n.style.left = (ox + dx) + 'px';
             n.style.top  = (oy + dy) + 'px';
           };
