@@ -19,13 +19,13 @@ const W = 210, H = 200, R = 16;
 function displacementMap(border, cblockR) {
   const svg = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">
 <defs>
-<linearGradient id="r" x1="100%" y1="0%" x2="0%" y2="0%"><stop offset="0%" stop-color="#0000"/><stop offset="100%" stop-color="red"/></linearGradient>
-<linearGradient id="b" x1="0%" y1="100%" x2="0%" y2="0%"><stop offset="0%" stop-color="#0000"/><stop offset="100%" stop-color="blue"/></linearGradient>
+<linearGradient id="r" x1="0%" x2="100%"><stop offset="0%" stop-color="#ff0000"/><stop offset="100%" stop-color="#000000"/></linearGradient>
+<linearGradient id="b" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#0000ff"/><stop offset="100%" stop-color="#000000"/></linearGradient>
 </defs>
 <rect width="${W}" height="${H}" fill="black"/>
 <rect width="${W}" height="${H}" rx="${R}" fill="url(#r)"/>
-<rect width="${W}" height="${H}" rx="${R}" fill="url(#b)" style="mix-blend-mode:difference"/>
-<rect x="${border}" y="${border}" width="${W - 2 * border}" height="${H - 2 * border}" rx="${cblockR}" fill="hsl(0 0% 50% / 1)" style="filter:blur(4px)"/>
+<rect width="${W}" height="${H}" rx="${R}" fill="url(#b)" style="mix-blend-mode:screen"/>
+<rect x="${border}" y="${border}" width="${W - 2 * border}" height="${H - 2 * border}" rx="${cblockR}" fill="rgb(128,128,128)" style="filter:blur(4px)"/>
 </svg>`;
   return 'data:image/svg+xml,' + encodeURIComponent(svg);
 }
