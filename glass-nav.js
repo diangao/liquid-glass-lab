@@ -114,7 +114,8 @@ class GlassNav extends HTMLElement {
   *{ box-sizing:border-box; }
   .nav{ display:flex; align-items:center; }
   .trigger{ appearance:none; background:none; border:0; cursor:pointer; margin:0; padding:6px 10px;
-    border-radius:8px; color:#fff; font:600 15px/1 inherit; letter-spacing:-0.004em;
+    border-radius:8px; color:#fff; font-family:inherit; font-weight:var(--glass-nav-trigger-weight, 600); line-height:1;
+    font-size:var(--glass-nav-trigger-size, 15px); letter-spacing:-0.01em;
     text-shadow:0 1px 5px rgba(0,0,0,.42); }
   .trigger:focus-visible{ outline:2px solid rgba(255,255,255,.75); outline-offset:2px; }
   .wrap{ position:relative; }
@@ -136,7 +137,8 @@ class GlassNav extends HTMLElement {
   .menu li{ position:relative; z-index:1; }
   .menu a{ display:block; padding:11px 26px; margin:4px 0; border-radius:11px; text-decoration:none;
     white-space:nowrap; color:#fff; cursor:pointer; transition:background .12s ease;
-    font:500 14px/1.25 inherit; letter-spacing:-0.004em; text-shadow:0 1px 3px rgba(0,0,0,.5); }
+    font-family:inherit; font-weight:500; line-height:1.25; font-size:var(--glass-nav-item-size, 14px);
+    letter-spacing:-0.004em; text-shadow:0 1px 3px rgba(0,0,0,.5); }
   .menu li:first-child a{ margin-top:0; } .menu li:last-child a{ margin-bottom:0; }
   .menu a:hover, .menu a:focus-visible{ background:rgba(255,255,255,0.26);
     box-shadow:inset 0 0 0 1px rgba(255,255,255,0.18); outline:none; }
