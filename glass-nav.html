@@ -88,11 +88,13 @@
       };
       navs.forEach(n => {
         let moved = false;
+        // stop the browser's native text/link drag from hijacking the pointer —
+        // do it on dragstart (NOT pointerdown, which would suppress the click that toggles the menu).
+        n.addEventListener('dragstart', e => e.preventDefault());
         // pointerdown anywhere on the panel (trigger OR card body) starts a drag;
         // document-level move/up listeners track it reliably even as the element moves.
         n.addEventListener('pointerdown', e => {
           if (e.button) return;
-          e.preventDefault();  // stop native text/link drag from hijacking the pointer
           moved = false;
           const sx = e.clientX, sy = e.clientY;
           const ox = parseFloat(n.style.left), oy = parseFloat(n.style.top);
