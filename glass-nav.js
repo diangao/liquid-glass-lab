@@ -8,7 +8,7 @@
 //     <a href="#contact">Knock knock</a>
 //   </glass-nav>
 //
-// material: "soft-frost" | "edge-lens" | "thick-crystal"  (default soft-frost)
+// material: "soft-ripple" | "edge-lens" | "thick-crystal"  (default soft-ripple)
 // label:    trigger text  (default "Menu")
 // Menu items come from the element's <a> children.
 //
@@ -42,7 +42,7 @@ function structuredChroma(mapId, scales) {
 }
 
 const MATERIALS = {
-  'soft-frost': {
+  'soft-ripple': {
     filter: `<feTurbulence type="fractalNoise" baseFrequency="0.019 0.020" numOctaves="1" seed="4" result="n"/>
 <feGaussianBlur in="n" stdDeviation="1.4" result="nb"/>
 <feDisplacementMap in="SourceGraphic" in2="nb" scale="64" xChannelSelector="R" yChannelSelector="G" result="dR"/>
@@ -96,8 +96,8 @@ class GlassNav extends HTMLElement {
   attributeChangedCallback() { if (this.shadowRoot) this.render(); }
 
   render() {
-    const name = this.getAttribute('material') || 'soft-frost';
-    const m = MATERIALS[name] || MATERIALS['soft-frost'];
+    const name = this.getAttribute('material') || 'soft-ripple';
+    const m = MATERIALS[name] || MATERIALS['soft-ripple'];
     const label = this.getAttribute('label') || 'Menu';
     const filter = typeof m.filter === 'function' ? m.filter() : m.filter;
     const startOpen = this.hasAttribute('open');

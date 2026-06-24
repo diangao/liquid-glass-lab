@@ -25,11 +25,11 @@
     font-size:14px; font-weight:500; letter-spacing:-0.004em; text-shadow:0 1px 3px rgba(0,0,0,.5); }
   .menu li:first-child a{margin-top:0} .menu li:last-child a{margin-bottom:0}
   .menu a.hi{ background:rgba(255,255,255,0.26); box-shadow:inset 0 0 0 1px rgba(255,255,255,0.18); }
-  /* Soft Frost */
-  .frost{ backdrop-filter: blur(0.5px) url(#frost) saturate(1.1) brightness(1.02); background:rgba(255,255,255,0.07); }
-  .frost::before{ content:""; position:absolute; inset:0; pointer-events:none; border-radius:inherit;
+  /* Soft Ripple */
+  .ripple{ backdrop-filter: blur(0.5px) url(#ripple) saturate(1.1) brightness(1.02); background:rgba(255,255,255,0.07); }
+  .ripple::before{ content:""; position:absolute; inset:0; pointer-events:none; border-radius:inherit;
     background:linear-gradient(100deg, rgba(20,24,28,0.2) 0%, rgba(20,24,28,0.07) 60%, rgba(20,24,28,0) 92%); }
-  .frost li{ position:relative; z-index:1 }
+  .ripple li{ position:relative; z-index:1 }
   /* Edge Lens */
   .edge{ backdrop-filter: url(#edge) brightness(1.0) saturate(1.03); background:rgba(255,255,255,0.02); }
   /* Thick Crystal */
@@ -45,7 +45,7 @@
 </style></head>
 <body>
   <svg aria-hidden="true" style="position:absolute;width:0;height:0">
-    <filter id="frost" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
+    <filter id="ripple" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
       <feTurbulence type="fractalNoise" baseFrequency="0.019 0.020" numOctaves="1" seed="4" result="n"/>
       <feGaussianBlur in="n" stdDeviation="1.4" result="nb"/>
       <feDisplacementMap in="SourceGraphic" in2="nb" scale="64" xChannelSelector="R" yChannelSelector="G" result="dR"/>
@@ -84,8 +84,8 @@
   </div>
   <div class="row">
     <div class="study">
-      <div class="label"><div class="name">Soft Frost</div><div class="desc">full-surface frost — soft, atmospheric, system-light</div></div>
-      <ul class="menu frost"><li><a>Scribbles</a></li><li><a class="hi">Tinkering</a></li><li><a>Up to</a></li><li><a>Knock knock</a></li></ul>
+      <div class="label"><div class="name">Soft Ripple</div><div class="desc">full-surface ripple — soft, atmospheric, system-light</div></div>
+      <ul class="menu ripple"><li><a>Scribbles</a></li><li><a class="hi">Tinkering</a></li><li><a>Up to</a></li><li><a>Knock knock</a></li></ul>
     </div>
     <div class="study">
       <div class="label"><div class="name">Edge Lens</div><div class="desc">clear center, refraction only at the rim — a true lens</div></div>

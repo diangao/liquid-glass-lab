@@ -12,11 +12,11 @@ with the same open/close animation. Only the glass changes.
 
 ## Material demos
 
-| Soft Frost | Edge Lens | Thick Crystal |
+| Soft Ripple | Edge Lens | Thick Crystal |
 | --- | --- | --- |
-| ![Soft Frost](media/soft-frost.gif) | ![Edge Lens](media/edge-lens.gif) | ![Thick Crystal](media/thick-crystal.gif) |
+| ![Soft Ripple](media/soft-ripple.gif) | ![Edge Lens](media/edge-lens.gif) | ![Thick Crystal](media/thick-crystal.gif) |
 
-- **Soft Frost** — a soft, even haze across the panel.
+- **Soft Ripple** — a soft, full-surface ripple.
 - **Edge Lens** — a clear center with refraction at the rim, like a true lens.
 - **Thick Crystal** — a heavier edge with corner gloss and caustics.
 
@@ -28,7 +28,7 @@ Open any file in Chrome, or serve the folder locally:
 python3 -m http.server 8766
 ```
 
-- `nav-dropdown.html` — Soft Frost
+- `nav-dropdown.html` — Soft Ripple
 - `nav-dropdown-edge-lens.html` — Edge Lens
 - `nav-dropdown-thick-glass.html` — Thick Crystal
 - `showcase.html` — all three side by side
@@ -48,7 +48,7 @@ python3 -m http.server 8766
 </glass-nav>
 ```
 
-- `material` — `soft-frost` | `edge-lens` | `thick-crystal`
+- `material` — `soft-ripple` | `edge-lens` | `thick-crystal`
 - `label` — the trigger text
 - menu items — `<a>` children
 - `open` — start expanded; `--glass-nav-trigger-size` / `--glass-nav-item-size` tune the type
@@ -60,7 +60,7 @@ shadow-DOM encapsulated.
 
 Each panel applies an SVG filter as a `backdrop-filter`:
 
-- **Displacement map.** Soft Frost uses `feTurbulence` for a full-surface swirl.
+- **Displacement map.** Soft Ripple uses `feTurbulence` for a full-surface swirl.
   Edge Lens and Thick Crystal use a structured gradient map that keeps the
   center clear and concentrates the bend at the edge.
 - **Chromatic fringe.** Three displacement passes at slightly different scales,
