@@ -79,7 +79,7 @@ const MATERIALS = {
 };
 
 class GlassNav extends HTMLElement {
-  static get observedAttributes() { return ['material', 'label']; }
+  static get observedAttributes() { return ['material', 'label', 'open']; }
 
   connectedCallback() {
     if (!this._items) {
@@ -100,6 +100,7 @@ class GlassNav extends HTMLElement {
     const m = MATERIALS[name] || MATERIALS['soft-frost'];
     const label = this.getAttribute('label') || 'Menu';
     const filter = typeof m.filter === 'function' ? m.filter() : m.filter;
+    const startOpen = this.hasAttribute('open');
     const items = (this._items || []).map(
       it => `<li><a href="${it.href}">${it.text}</a></li>`
     ).join('');
@@ -143,15 +144,15 @@ class GlassNav extends HTMLElement {
 </style>
 <nav class="nav" aria-label="Primary">
   <div class="wrap">
-    <button class="trigger" id="trigger" aria-haspopup="true" aria-expanded="false" aria-controls="menu">${label}</button>
-    <ul class="menu" id="menu">${items}</ul>
+    <button class="trigger" id="trigger" aria-haspopup="true" aria-expanded="${startOpen}" aria-controls="menu">${label}</button>
+    <ul class="menu${startOpen ? ' open' : ''}" id="menu">${items}</ul>
   </div>
 </nav>`;
 
     const trigger = this.shadowRoot.getElementById('trigger');
     const menu = this.shadowRoot.getElementById('menu');
     const links = [...menu.querySelectorAll('a')];
-    let open = false;
+    let open = startOpen;
     const setOpen = (v, focus) => {
       open = v;
       trigger.setAttribute('aria-expanded', String(v));

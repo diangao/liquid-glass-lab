@@ -2,33 +2,51 @@
 <html lang="en"><head><meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Liquid glass — &lt;glass-nav&gt; web component</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
-  html,body{ margin:0; height:100%; }
-  body{ background:url("https://res.cloudinary.com/pplx/image/upload/pplx-web/Computer/images/step-bg-02.webp") center/cover fixed no-repeat;
-    font-family:"SF Pro Display","Inter",-apple-system,system-ui,sans-serif;
-    display:flex; gap:64px; align-items:flex-start; padding:64px 48px; }
-  .col{ display:flex; flex-direction:column; gap:14px; }
-  .col h2{ color:#fff; font-weight:600; font-size:14px; margin:0; letter-spacing:-0.01em;
-    text-shadow:0 1px 6px rgba(0,0,0,.45); }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; min-height:100%; }
+  body{ min-height:100vh; background:url("media/meadow.jpg") center/cover fixed no-repeat;
+    font-family:"SF Pro Display","Inter",-apple-system,system-ui,sans-serif; color:#fff;
+    -webkit-font-smoothing:antialiased; padding:60px 48px 120px; }
+  .head{ max-width:980px; margin:0 auto 56px; text-shadow:0 1px 8px rgba(0,0,0,.4); }
+  .head h1{ font-family:"Plus Jakarta Sans",sans-serif; font-weight:800; font-size:30px;
+    letter-spacing:-0.02em; margin:0 0 8px; }
+  .head p{ font-size:14px; opacity:.85; margin:0; max-width:600px; line-height:1.55; }
+  .head code{ font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:13px;
+    background:rgba(255,255,255,0.16); padding:1px 6px; border-radius:5px; }
+  .row{ display:flex; gap:58px; justify-content:center; flex-wrap:wrap; max-width:1080px; margin:0 auto; }
+  .study{ width:230px; }
+  .label{ margin-bottom:22px; text-shadow:0 1px 6px rgba(0,0,0,.45); }
+  .label .name{ font-family:"Plus Jakarta Sans",sans-serif; font-weight:700; font-size:16px; letter-spacing:-0.01em; }
+  .label .desc{ font-size:12.5px; opacity:.8; line-height:1.5; margin-top:4px; }
 </style>
 <script src="glass-nav.js" defer></script>
 </head><body>
-  <div class="col">
-    <h2>Soft Frost</h2>
-    <glass-nav material="soft-frost" label="dian's corner">
-      <a href="#writing">Scribbles</a><a href="#log">Tinkering</a><a href="#now">Up to</a><a href="#contact">Knock knock</a>
-    </glass-nav>
+  <div class="head">
+    <h1>&lt;glass-nav&gt;</h1>
+    <p>One web component, three glass materials. Set <code>material</code>, give it a <code>label</code>,
+       drop in <code>&lt;a&gt;</code> items — the refraction, animation, and keyboard handling come built in.</p>
   </div>
-  <div class="col">
-    <h2>Edge Lens</h2>
-    <glass-nav material="edge-lens" label="dian's corner">
-      <a href="#writing">Scribbles</a><a href="#log">Tinkering</a><a href="#now">Up to</a><a href="#contact">Knock knock</a>
-    </glass-nav>
-  </div>
-  <div class="col">
-    <h2>Thick Crystal</h2>
-    <glass-nav material="thick-crystal" label="dian's corner">
-      <a href="#writing">Scribbles</a><a href="#log">Tinkering</a><a href="#now">Up to</a><a href="#contact">Knock knock</a>
-    </glass-nav>
+  <div class="row">
+    <div class="study">
+      <div class="label"><div class="name">Soft Frost</div><div class="desc">a soft, even haze across the panel</div></div>
+      <glass-nav open material="soft-frost" label="dian's corner">
+        <a href="#writing">Scribbles</a><a href="#log">Tinkering</a><a href="#now">Up to</a><a href="#contact">Knock knock</a>
+      </glass-nav>
+    </div>
+    <div class="study">
+      <div class="label"><div class="name">Edge Lens</div><div class="desc">clear center, refraction at the rim</div></div>
+      <glass-nav open material="edge-lens" label="dian's corner">
+        <a href="#writing">Scribbles</a><a href="#log">Tinkering</a><a href="#now">Up to</a><a href="#contact">Knock knock</a>
+      </glass-nav>
+    </div>
+    <div class="study">
+      <div class="label"><div class="name">Thick Crystal</div><div class="desc">heavier edge with corner gloss</div></div>
+      <glass-nav open material="thick-crystal" label="dian's corner">
+        <a href="#writing">Scribbles</a><a href="#log">Tinkering</a><a href="#now">Up to</a><a href="#contact">Knock knock</a>
+      </glass-nav>
+    </div>
   </div>
 </body></html>
