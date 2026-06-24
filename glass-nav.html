@@ -3,7 +3,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Liquid glass — &lt;glass-nav&gt; web component</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
 <style>
   *{ box-sizing:border-box; }
   html,body{ margin:0; min-height:100%; }
@@ -21,7 +21,7 @@
   .row{ display:flex; gap:108px; justify-content:center; flex-wrap:wrap; max-width:1340px; margin:0 auto; }
   /* each material name is its own dropdown trigger */
   glass-nav{ --glass-nav-trigger-size:16px; --glass-nav-trigger-weight:700; width:212px; }
-  .foot{ position:fixed; left:0; right:0; top:496px; text-align:center; z-index:0; }
+  .foot{ position:fixed; left:0; right:0; bottom:26px; text-align:center; z-index:5; }
   /* frosted-glass GitHub badge */
   .gh{ display:inline-flex; align-items:center; gap:8px;
     color:#fff; font-size:13px; font-weight:600; text-decoration:none; letter-spacing:-0.01em;
@@ -33,9 +33,22 @@
     text-shadow:0 1px 4px rgba(0,0,0,.35); transition:background .15s ease; }
   .gh:hover{ background:rgba(255,255,255,0.2); }
   .gh svg{ width:16px; height:16px; display:block; }
+  /* handwritten "drag me around!" annotation — a page-level sibling, not inside the glass */
+  .hint{ position:absolute; left:96px; top:300px; z-index:3; pointer-events:none;
+    font-family:"Caveat",cursive; font-weight:700; font-size:34px; color:rgba(255,255,255,0.96);
+    transform:rotate(-7deg); text-shadow:0 2px 8px rgba(0,0,0,0.45); line-height:1; }
+  .hint .arrow{ position:absolute; left:108px; top:34px; transform:rotate(6deg); }
+  .hint .arrow path{ stroke:rgba(255,255,255,0.92); stroke-width:2.4; fill:none; stroke-linecap:round; stroke-linejoin:round;
+    filter:drop-shadow(0 1px 3px rgba(0,0,0,0.4)); }
 </style>
 <script src="glass-nav.js" defer></script>
 </head><body>
+  <div class="hint">drag me around!
+    <svg class="arrow" width="120" height="80" viewBox="0 0 120 80" aria-hidden="true">
+      <path d="M6 8 C 46 6 84 22 100 56"/>
+      <path d="M86 50 L101 58 L92 40"/>
+    </svg>
+  </div>
   <div class="head">
     <h1>&lt;glass-nav&gt;</h1>
     <p>One web component, three glass materials. Set <code>material</code>, give it a <code>label</code>,
