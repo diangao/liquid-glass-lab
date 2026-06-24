@@ -70,9 +70,9 @@
       navs.forEach((n, i) => {
         const id = n.getAttribute('material');
         const p = saved[id];
-        n.style.position = 'fixed';
+        n.style.position = 'absolute';
         n.style.margin = '0';
-        n.style.left = ((p && p.left != null) ? p.left : Math.round(rects[i].left)) + 'px';
+        n.style.left = ((p && p.left != null) ? p.left : Math.round(rects[i].left + window.scrollX)) + 'px';
         n.style.top  = ((p && p.top  != null) ? p.top  : Math.round(rects[i].top))  + 'px';
         n.style.cursor = 'grab';
         n.style.touchAction = 'none';
