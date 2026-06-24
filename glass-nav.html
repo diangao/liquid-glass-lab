@@ -14,6 +14,8 @@
   .head h1{ font-weight:800; font-size:30px; letter-spacing:-0.02em; margin:0 0 8px; }
   .head p{ font-size:14px; opacity:.85; margin:0; max-width:600px; line-height:1.55;
     font-family:"SF Pro Display","Inter",system-ui,sans-serif; }
+  .head .note{ font-size:12.5px; opacity:.72; margin:10px 0 0;
+    font-family:"SF Pro Display","Inter",system-ui,sans-serif; }
   .head code{ font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:13px;
     background:rgba(255,255,255,0.16); padding:1px 6px; border-radius:5px; }
   .row{ display:flex; gap:108px; justify-content:center; flex-wrap:wrap; max-width:1340px; margin:0 auto; }
@@ -26,6 +28,7 @@
     <h1>&lt;glass-nav&gt;</h1>
     <p>One web component, three glass materials. Set <code>material</code>, give it a <code>label</code>,
        drop in <code>&lt;a&gt;</code> items — the refraction, animation, and keyboard handling come built in.</p>
+    <p class="note">Best viewed in Chrome — the refraction uses a Chromium-only filter.</p>
   </div>
   <div class="row">
     <glass-nav open material="soft-frost" label="Soft Frost">

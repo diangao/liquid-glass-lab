@@ -5,6 +5,8 @@ refract the backdrop, built with SVG displacement filters and `backdrop-filter`.
 Three material treatments on the same dropdown nav, over the same background,
 with the same open/close animation. Only the glass changes.
 
+**▶ [Live demo](https://diangao.github.io/liquid-glass-lab/)** — best viewed in Chrome.
+
 > **Chromium only.** `backdrop-filter: url(#filter)` is not supported in Safari
 > or Firefox, so the refraction renders in Chrome / Edge.
 
