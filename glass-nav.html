@@ -95,6 +95,13 @@
       });
       let z = 2;
       const hint = document.querySelector('.hint');
+      // anchor the hint to the actual Soft Ripple panel so its arrow always points at it,
+      // regardless of viewport width or a drag position restored from localStorage.
+      const sr = navs.find(n => n.getAttribute('material') === 'soft-ripple') || navs[0];
+      if (hint && sr) {
+        hint.style.left = (parseFloat(sr.style.left) - 146) + 'px';
+        hint.style.top  = (parseFloat(sr.style.top)  - 33) + 'px';
+      }
       const save = () => {
         const out = {};
         navs.forEach(n => { out[n.getAttribute('material')] = { left: parseFloat(n.style.left), top: parseFloat(n.style.top) }; });
